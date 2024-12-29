@@ -1,11 +1,14 @@
 import React from 'react'
-import { BookMarked ,Menu,Moon,Search,User} from 'lucide-react'
-import { Outlet,Link } from 'react-router-dom'
+import { BookMarked ,LogOut,Menu,Moon,Search,User} from 'lucide-react'
+import { Outlet,Link, Navigate, useNavigate } from 'react-router-dom'
 import { useState ,useEffect} from 'react'
 import { createPortal } from 'react-dom'
 import Login from './Auth/Login'
+import { GetUsersData } from '../Context/AppContext'
 
 function Navbare() {
+    const navigate=useNavigate()
+    const {user,token,setToken,setUser}=GetUsersData()
     const [isOpen,setOpen]=useState(false)
     function openModel(){
         setOpen((prev)=>!prev)
@@ -22,6 +25,23 @@ function Navbare() {
             document.body.style.overflow = 'auto';
         };
     }, [isOpen]);
+    async function handellogout(e){
+        e.preventDefault()
+        const res=await fetch('/api/logout',{
+            method:"post",
+            headers:{
+                Authorization:`Bearer ${token}` 
+            }
+        })
+        const data =await res.json()
+        console.log(data)
+        if (res.ok){
+            setUser(null)
+            setToken(null)
+            localStorage.removeItem("token")
+            Navigate("/")
+        }
+    }
 
   return (
     <div>
@@ -35,13 +55,23 @@ function Navbare() {
                     <Link to="/" className='cursor-pointer hover:text-primary duration-300 '>Home</Link>
                     <Link  className='cursor-pointer hover:text-primary duration-300 '>Featured</Link>
                     <Link className='cursor-pointer hover:text-primary duration-300 '>discount</Link>
-                    <Link to="/register" className='cursor-pointer hover:text-primary duration-300 '>register</Link>
-                    <Link to="/login"  className='cursor-pointer hover:text-primary duration-300 ' >login</Link>
+                    {!user && (
+                        <>
+                        <Link to="/register" className='cursor-pointer hover:text-primary duration-300 '>register</Link>
+                        <Link to="/login"  className='cursor-pointer hover:text-primary duration-300 ' >login</Link>
+                        </>
+                    )}
                 </ul>
                 <div className='md:flex gap-4 hidden'>
                     <Search  className='hover:text-primary duration-300 cursor-pointer ' />
                     <User  onClick={openModel}  className='hover:text-primary duration-300 cursor-pointer '/>
                     <Moon    className='hover:text-primary duration-300  cursor-pointer'/>
+                    {user &&(
+                        <form onSubmit={handellogout}>
+                            <button ><LogOut className="hover:text-red-600 cursor-pointer duration-300" /></button>
+                            
+                        </form>
+                    )}
                 </div>
                 <div className='block xl:hidden  duration-300 cursor-pointer hover:text-primary '>
                     <Menu size={30}/>
