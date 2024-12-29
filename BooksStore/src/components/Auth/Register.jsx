@@ -4,8 +4,7 @@ import  { GetUsersData } from '../../Context/AppContext'
 
 function Register() {
   const {setToken} = GetUsersData();
-
-  const [formData,setFormData]=useState({name:"",email:"",role:"",password:"",password_confirmation:""})
+  const [formData,setFormData]=useState({name:"",email:"",role:"user",password:"",password_confirmation:""})
   const [errors,setErrors]=useState({})
   const navigate=useNavigate()
     async function  handelSubmit(e){

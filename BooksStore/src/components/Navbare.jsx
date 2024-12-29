@@ -7,8 +7,9 @@ import Login from './Auth/Login'
 import { GetUsersData } from '../Context/AppContext'
 
 function Navbare() {
-    const navigate=useNavigate()
+    
     const {user,token,setToken,setUser}=GetUsersData()
+    console.log(user)
     const [isOpen,setOpen]=useState(false)
     function openModel(){
         setOpen((prev)=>!prev)
@@ -61,6 +62,10 @@ function Navbare() {
                         <Link to="/login"  className='cursor-pointer hover:text-primary duration-300 ' >login</Link>
                         </>
                     )}
+                    {user && user.role==="admin" ? (
+                            <Link to="/list"  className='cursor-pointer hover:text-primary duration-300 '>list</Link>
+                
+                    ):null}
                 </ul>
                 <div className='md:flex gap-4 hidden'>
                     <Search  className='hover:text-primary duration-300 cursor-pointer ' />
