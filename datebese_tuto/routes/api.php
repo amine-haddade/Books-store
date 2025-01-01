@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ Route::get('/',function(){
 });
 
 Route::apiResource('books',BookController::class)->middleware("auth:sanctum");
+
+Route::apiResource('Category',CategoryController::class);
+
 Route::post('/createuser',[AuthController::class,'createuser']);
 
 Route::post('/login',[AuthController::class,'login']);

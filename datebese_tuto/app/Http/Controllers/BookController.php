@@ -26,9 +26,31 @@ class BookController extends Controller implements HasMiddleware
         $data=$request->validate([
             'title'=>'required',
             'description'=>'required|min:15',
+            'category_id'=>'required|'
+            // 'image'=>'required|max:100000|file',
+            // 'pdf'=>'required|file|mimes:pdf'
         ]);
-        $book=Book::create($data);
-        return ['book'=>$book];
+        // if($request->hasFile('pdf') && $request->hasFile('image') ){
+        //     $nameImage=time().'_'.$request->file('image')->getClientOriginalName();
+        //     $namePdf=time().'_'.$request->file('pdf')->getClientOriginalName();
+        //     $imagePath=$request->file('image')->storeAs('Books/Images',$nameImage,'public');
+        //     $pdfPath=$request->file('pdf')->storeAs('Books/Pdf',$namePdf,'public');
+            $book=Book::create([
+                'title'=>$data['title'],
+                'description'=>$data['description'],
+                'category_id'=>$data['category_id']
+            //     'image'=>$imagePath,
+            //     'pdf'=>$pdfPath,
+            ]);
+            return ['book'=>$book];
+        // }
+        
+            // else {
+            //     // Si l'un des fichiers n'est pas présent, ne pas créer le livre
+            //     return response()->json(['error' => 'Image and PDF are required'], 400);
+            // }
+        
+        
     }
     public function show(Book $book){
         
@@ -39,6 +61,7 @@ class BookController extends Controller implements HasMiddleware
         $data=$request->validate([
             'title'=>'required',
             'description'=>'required|min:15',
+            'category_id'=>'required'
         ]);
         $book->update($data);
         return ['bookupdated'=>$book];

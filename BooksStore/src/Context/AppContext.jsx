@@ -4,6 +4,7 @@ export  function AppProvider({children}) {
   const [token,setToken]=useState(localStorage.getItem("token"))
   const [user,setUser]=useState(null)
   const [listBooks,setListBooks]=useState([])
+  const [listCategory,setListCategory]=useState([])
 
   async function getUser(){
       const res=await fetch('api/user',{
@@ -30,17 +31,28 @@ export  function AppProvider({children}) {
       setListBooks(data.books)
     }
   }
+  async function geetCategory(){
+    const res =await fetch('api/Category',{
+      method:"get",
+    })
+    const data=await res.json()
+    if(res.ok){
+      console.log(data)
+      setListCategory(data.categorys)
+    }
+  }
   useEffect(()=>{
     if(token){
       getUser()
       getBooks()
+      geetCategory()
     }
   },[token])
 
  
   
   return (
-    <AppContext.Provider value={{token,setToken,user,setUser,listBooks,setListBooks}}>
+    <AppContext.Provider value={{token,setToken,user,setUser,listBooks,setListBooks,listCategory}}>
       {children}
     </AppContext.Provider>
   )

@@ -12,6 +12,7 @@ export default {
         "primaryhover":"#738be3",
         "bluebg":"#e4ecfa",
         "bgdarck":"rgba(0, 0, 0, 0.845)",
+        "bglogin":"#edf0fb"
       }
     },
   },
