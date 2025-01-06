@@ -1,29 +1,33 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { GetUsersData } from '../../Context/AppContext';
 
 function Create() {
     const {token,listCategory}=GetUsersData()
-    const [formData,setFormData]=useState({title:"",description:"",category_id:""})
+    const [formData,setFormData]=useState({title:"",description:"",category_id:"1"})
     const [errors,setErrors]=useState({})
     const navigate=useNavigate()
-      async function  handelSubmit(e){
+    const title_ref=useRef()
+    const description_ref=useRef()
+    const category_id_ref=useRef(1)
+    const photRef=useRef()
+    const pdfRef=useRef()
+    
+      const  handelSubmit=async(e)=>{
         e.preventDefault()
-        // const mediaUploads= new FormData();
-        // mediaUploads.append('title',formData.title);
-        // mediaUploads.append('description',formData.description);
-        // mediaUploads.append('image',formData.image);
-        // mediaUploads.append('pdf',formData.pdf);
-        
+        const formData_old=new FormData(e.currentTarget)
+        formData_old.append("image",photRef.current.files[0]);
+        formData_old.append("pdf",pdfRef.current.files[0]);
+
         const res=await fetch('/api/books',{
           method:"post",
-          body:JSON.stringify(formData),
+          body:formData_old,
           headers:{
             Authorization:`Bearer ${token}`,
-            // 'Content-Type':"multipart/form-data"
+            
           }
-      })
-      const data=await res.json()
+        })
+        const data=await res.json()
         if(data.errors){
           setErrors(data.errors)
         }
@@ -38,12 +42,13 @@ function Create() {
         <h1 className='text-center text-3xl'>create book</h1>
           <div className='flex flex-col gap-0.5'>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">title</label>
-              <input  
+              <input 
+              name='title' 
+              ref={title_ref} 
               value={formData.title}
               onChange={(e)=>setFormData({...formData,title:e.target.value})}
               className="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               type="text"
-              name='title' 
               id='title' 
               placeholder='title of book'/>
               {errors.title && <span className='text-red-600 text-sm'>{errors.title[0]}</span>}
@@ -52,6 +57,7 @@ function Create() {
           <div className='flex flex-col gap-1'>
               <label htmlFor="role" className="block text-sm font-medium text-gray-700">description</label>
               <textarea  
+              ref={description_ref}
               value={formData.description}
               onChange={(e)=>{setFormData({...formData,description:e.target.value})}}
               className="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -66,9 +72,11 @@ function Create() {
           <div className='flex flex-col gap-1'>
                   <label htmlFor="category" className="block text-sm font-medium text-gray-700">Catégories</label>
                   <select
+                  name='category_id'
                     id="category"
                     className="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     value={formData.category_id}
+                    ref={category_id_ref}
                     onChange={(e) =>
                       setFormData({ ...formData, category_id: e.target.value })
                     }
@@ -89,9 +97,9 @@ function Create() {
           </div>
           <div className='flex flex-col gap-1'>
               <label htmlFor="image">image</label>
-              <input  
-              name='image'
-              onChange={(e)=>{setFormData({...formData,image:e.target.files[0]})}}
+              <input
+              ref={photRef}  
+              accept="image/*"
               className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 
               type="file" 
               id='image'
@@ -103,12 +111,11 @@ function Create() {
           <div className='flex flex-col gap-1'>
               <label htmlFor="pdf">pdf</label>
               <input  
-              name='pdf'
-              onChange={(e)=>{setFormData({...formData,pdf:e.target.files[0]})}}
+              
               className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 
               type="file" 
               id='pdf'
-            
+              ref={pdfRef}
               />
               {errors.pdf && <span className='text-red-600 text-sm'>{errors.pdf[0]}</span>}
   

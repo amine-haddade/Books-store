@@ -12,8 +12,8 @@ class Book extends Model
     protected $fillable=[
         'title',
         'description',
-        // 'pdf',
-        // 'image',
+        'pdf',
+        'image',
         'category_id'
     ];
     public function gategory(){

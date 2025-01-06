@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\User;
 
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;//  storage link pour affichier le image depuis la requestt http
 
 class BookController extends Controller implements HasMiddleware
 {
@@ -26,29 +26,29 @@ class BookController extends Controller implements HasMiddleware
         $data=$request->validate([
             'title'=>'required',
             'description'=>'required|min:15',
-            'category_id'=>'required|'
-            // 'image'=>'required|max:100000|file',
-            // 'pdf'=>'required|file|mimes:pdf'
+            'category_id'=>'required|',
+            'image'=>'required|max:100000|file',
+            'pdf'=>'required|file|mimes:pdf'
         ]);
-        // if($request->hasFile('pdf') && $request->hasFile('image') ){
-        //     $nameImage=time().'_'.$request->file('image')->getClientOriginalName();
-        //     $namePdf=time().'_'.$request->file('pdf')->getClientOriginalName();
-        //     $imagePath=$request->file('image')->storeAs('Books/Images',$nameImage,'public');
-        //     $pdfPath=$request->file('pdf')->storeAs('Books/Pdf',$namePdf,'public');
+        if( $request->hasFile('image')){
+            $nameImage=time().'_'.$request->file('image')->getClientOriginalName();
+            $namePdf=time().'_'.$request->file('pdf')->getClientOriginalName();
+            $imagePath=$request->file('image')->storeAs('Books/Images',$nameImage,'public');
+            $pdfPath=$request->file('pdf')->storeAs('Books/Pdf',$namePdf,'public');
             $book=Book::create([
                 'title'=>$data['title'],
                 'description'=>$data['description'],
-                'category_id'=>$data['category_id']
-            //     'image'=>$imagePath,
-            //     'pdf'=>$pdfPath,
+                'category_id'=>$data['category_id'],
+                'image'=>$imagePath,
+                'pdf'=>$pdfPath,
             ]);
             return ['book'=>$book];
-        // }
+        }
         
-            // else {
-            //     // Si l'un des fichiers n'est pas présent, ne pas créer le livre
-            //     return response()->json(['error' => 'Image and PDF are required'], 400);
-            // }
+            else {
+                // Si l'un des fichiers n'est pas présent, ne pas créer le livre
+                return response()->json(['error' => 'Image and PDF are required'], 400);
+            }
         
         
     }
@@ -69,6 +69,12 @@ class BookController extends Controller implements HasMiddleware
     public function destroy (Book $book){
         $user=Auth()->user();
         Gate::authorize('checkrole',$user);
+        if($book->image){
+            Storage::disk("public")->delete($book->image);
+        }
+        if($book->pdf){
+            Storage::disk("public")->delete($book->pdf);
+        }
         $book->delete();
         return["message"=>"book is delete"];
     }

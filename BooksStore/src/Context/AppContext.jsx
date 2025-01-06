@@ -23,6 +23,7 @@ export  function AppProvider({children}) {
       method:"get",
       headers:{
         Authorization:`Bearer ${token}`,
+        "Content_Type":"application/json"
       }
     })
     const data=await res.json()
@@ -34,6 +35,10 @@ export  function AppProvider({children}) {
   async function geetCategory(){
     const res =await fetch('api/Category',{
       method:"get",
+      headers:{
+        Authorization:`Bearer ${token}`,
+        "Content_Type":"application/json"
+      }
     })
     const data=await res.json()
     if(res.ok){

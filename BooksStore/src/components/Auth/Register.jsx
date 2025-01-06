@@ -9,9 +9,10 @@ function Register() {
   const navigate=useNavigate()
     async function  handelSubmit(e){
       e.preventDefault()
+      const formData_register=new FormData(e.currentTarget)
       const res=await fetch('/api/createuser',{
         method:"post",
-        body:JSON.stringify(formData)
+        body:formData_register
     })
     const data=await res.json()
       if(data.errors){
@@ -30,7 +31,8 @@ function Register() {
       <h1 className='text-center text-3xl'>register</h1>
         <div className='flex flex-col gap-0.5'>
             <label htmlFor="name">name</label>
-            <input  
+            <input
+            name='name'  
             value={formData.name}
             onChange={(e)=>{setFormData({...formData,name:e.target.value})}}
             className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 
@@ -42,6 +44,7 @@ function Register() {
         <div className='flex flex-col gap-1'>
             <label htmlFor="email">Email</label>
             <input
+            name='email'
             value={formData.email}
             onChange={(e)=>{setFormData({...formData,email:e.target.value})}}
             className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 
@@ -52,7 +55,8 @@ function Register() {
         </div>
         <div className='flex flex-col gap-1'>
             <label htmlFor="role">role</label>
-            <input  
+            <input
+            name='role'  
             value={formData.role}
             onChange={(e)=>{setFormData({...formData,role:e.target.value})}}
             className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 
@@ -65,6 +69,7 @@ function Register() {
         <div  className='flex flex-col gap-1'>
             <label htmlFor="password">password</label>
             <input
+            name='password'
             value={formData.password}
             onChange={(e)=>{setFormData({...formData,password:e.target.value})}}
             className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 
@@ -77,6 +82,7 @@ function Register() {
         <div  className='flex flex-col gap-1'>
             <label htmlFor="password confirmation">password confirmation</label>
             <input
+            name='password_confirmation'
             value={formData.password_confirmation}
             onChange={(e)=>{setFormData({...formData,password_confirmation:e.target.value})}}
             className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 

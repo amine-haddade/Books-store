@@ -5,9 +5,10 @@ import { GetUsersData } from '../../Context/AppContext';
 function Update() {
   const {id}=useParams()
     const {token,listCategory}=GetUsersData()
-    const [formData,setFormData]=useState({title:"",description:"",category_id:""})
+    const [formData,setFormData]=useState({title:"",description:"",category_id:"1"})
     const [errors,setErrors]=useState({})
     const navigate=useNavigate()
+    // show methode from show book cotroller
     async function getBooks(){
       const res =await fetch(`/api/books/${id}`,{
         headers:{
@@ -22,13 +23,17 @@ function Update() {
         console.log(data)
       }
     }
+
+    // put request to update methode in bookCotroller
       async function  handelSubmit(e){
         e.preventDefault()
+        const formData_old=new FormData(e.currentTarget)
         const res=await fetch(`/api/books/${id}`,{
           method:"put",
-          body:JSON.stringify(formData),
+          body:formData_old,
           headers:{
-            Authorization:`Bearer ${token}`
+            Authorization:`Bearer ${token}`,
+            
           }
       })
       const data=await res.json()
@@ -50,6 +55,7 @@ function Update() {
           <div className='flex flex-col gap-0.5'>
               <label htmlFor="name">title</label>
               <input  
+              name='title'
               value={formData.title}
               onChange={(e)=>{setFormData({...formData,title:e.target.value})}}
               className='px-2 py-3 text-sm border-gray-400 border-2 outline-none' 
@@ -68,6 +74,7 @@ function Update() {
               type="text" 
               id='description'
               rows={10} 
+              name='description'
               placeholder='write your description'/>
               {errors.description && <span className='text-red-600 text-sm'>{errors.description[0]}</span>}
   
@@ -75,6 +82,7 @@ function Update() {
           <div className='flex flex-col gap-1'>
                   <label htmlFor="category" className="block text-sm font-medium text-gray-700">Catégories</label>
                   <select
+                    name='category_id'
                     id="category"
                     className="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     value={formData.category_id}
