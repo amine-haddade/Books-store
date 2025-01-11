@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin:0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Roboto", serif;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%); /* L'élément commence au-dessus de l'écran */
+  }
+  100% {
+    transform: translateY(0); /* Ramène l'élément à sa position normale */
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-in-out; /* Durée de l'animation de 0.5s */
+}
+
