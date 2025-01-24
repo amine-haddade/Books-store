@@ -1,5 +1,0 @@
-Fonts used in this design:
-
-Font: Overpass
-Author: Red Hat
-Url: http://www.fontsquirrel.com/fonts/overpass

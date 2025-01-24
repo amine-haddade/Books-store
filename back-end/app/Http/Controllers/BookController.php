@@ -19,7 +19,7 @@ class BookController extends Controller implements HasMiddleware
         ];
     } 
     public function index(){
-        $books=Book::all();
+        $books=Book::with('category')->get();   
         return ['books'=>$books];
     }
     public function store(Request $request){
@@ -77,5 +77,15 @@ class BookController extends Controller implements HasMiddleware
         }
         $book->delete();
         return["message"=>"book is delete"];
+    }
+    public function read($idBook){
+        $book=Book::findOrFail($idBook);
+        $bookPath=storage_path('app/public/'.$book->pdf);
+        return response()->file($bookPath);
+    }
+    public function download($idBook){
+        $book=Book::findOrFail($idBook);
+        $bookPath=storage_path('app/public/'.$book->pdf);
+        return response()->download($bookPath);
     }
 }

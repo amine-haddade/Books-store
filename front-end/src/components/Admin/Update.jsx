@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { GetUsersData } from '../../Context/AppContext';
+import { GetUsersData } from '../../Provider/Context/AppContext';
 
 function Update() {
   const {id}=useParams()

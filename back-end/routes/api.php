@@ -23,3 +23,7 @@ Route::post('/createuser',[AuthController::class,'createuser']);
 Route::post('/login',[AuthController::class,'login']);
 
 Route::post('/logout',[AuthController::class,'logout'])->middleware("auth:sanctum");
+
+Route::get('books/{id}/read',[BookController::class,'read'])->name('books.read');
+Route::get('books/{id}/download',[BookController::class,'download'])->name('books.download');
+

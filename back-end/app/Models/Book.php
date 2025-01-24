@@ -16,7 +16,7 @@ class Book extends Model
         'image',
         'category_id'
     ];
-    public function gategory(){
+    public function category(){
         return $this->belongsTo(category::class);
     }
 }

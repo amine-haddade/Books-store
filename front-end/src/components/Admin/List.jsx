@@ -1,7 +1,7 @@
 import { Book, Plus } from 'lucide-react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { GetUsersData } from '../../Context/AppContext'
+import { GetUsersData } from '../../Provider/Context/AppContext'
 
 function List() {
   const {listBooks,token}=GetUsersData()
@@ -19,7 +19,7 @@ function List() {
 
   function  updatetitle(title){
     const words=title.split(' ')
-    if(words.length>2){
+    if(words.length>2){ 
       return words.slice(0,2).join(' ')+'...'
     }
     return title
