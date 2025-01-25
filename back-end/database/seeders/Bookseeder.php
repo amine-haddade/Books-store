@@ -14,11 +14,6 @@ class Bookseeder extends Seeder
      */
     public function run(): void
     {
-        Book::create([
-            
-                'title'=>'ui/ux',
-                'description'=>"une livre qui ofrre multitide conseil pour apprendre le domaine de desgin ui/ux"
-            
-        ]);
+        
     }
 }

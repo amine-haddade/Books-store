@@ -4,6 +4,28 @@ import { GetUsersData } from '../../../Provider/Context/AppContext'
 
 function Login({onClose}) {
     const refmodel=useRef()
+    const [errors,setErrors]=useState({})
+    const {setToken}=GetUsersData()
+    const navigate=useNavigate()
+
+
+
+    // function validation form 
+    function LoginVlaidation(Objects){
+      const email=Objects.get("email")
+      const password=Objects.get("password")
+      const NewErrors={}
+      if(!email){
+        NewErrors.email=email="l'email est required"
+      }
+      if(!password){
+        NewErrors.password="l'password est required"
+      }
+      setErrors(NewErrors)
+
+    }
+
+    //open model login form function
     const CloseModel=(e)=>{
       if(refmodel.current===e.target){
           onClose()
@@ -11,13 +33,11 @@ function Login({onClose}) {
     }
     
     
-    const {setToken}=GetUsersData()
-    const [errors,setErrors]=useState({})
-    const navigate=useNavigate()
 
     // post request to laravel login methode 
     async function handelSubmit(e){
         const formData_logn=new FormData(e.currentTarget)
+        
       e.preventDefault()
       const res=await fetch('/api/login',{
         method:"post",

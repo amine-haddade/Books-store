@@ -9,6 +9,19 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+
+
+    public function Allusers(){
+        $AllUser=User::all();
+
+        return response()->json([
+            'succes'=>true,
+            'message'=>' les user recupèrer avec succes',
+            'data'=>$AllUser
+            
+        ],200);
+    }
     public function createuser(CreateUserRequest $request){
         $datauser=$request->validated();
         $user=User::create($datauser);

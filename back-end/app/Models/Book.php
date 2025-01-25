@@ -16,7 +16,14 @@ class Book extends Model
         'image',
         'category_id'
     ];
+
+    // category relation 
     public function category(){
         return $this->belongsTo(category::class);
+    }
+
+    // reservation relation 
+    public function reservation(){
+        return $this->hasMany(reservation::class);
     }
 }

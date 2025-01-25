@@ -14,6 +14,8 @@ class Category extends Model
         'libelle',
     ];
 
+
+    // book relation
     public function Book(){
         return $this->hasMany(book::class);
     }
