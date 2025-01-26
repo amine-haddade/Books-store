@@ -9,6 +9,7 @@ import Subscribe from './Subscribe'
 import Collection from './Collection'
 import Serch from './Serch'
 import Footer from './Footer'
+import Navbare from './Layout/Navbare'
 // import { useDispatch, useSelector } from 'react-redux'
 // import { fetchUsers } from '../../Store/Actions/FetchUsers'
 // import { fetchBooks } from '../../Store/Actions/FetchBooks'
@@ -36,6 +37,9 @@ function Home() {
   
   return (
     <div >
+      <div className='sticky top-0'>
+      <Navbare/>
+      </div>
       <HeroSection/>
       <Services/>
       <Collection/>

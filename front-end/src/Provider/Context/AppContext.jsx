@@ -31,6 +31,7 @@ export  function AppProvider({children}) {
     .get('http://127.0.0.1:8000/api/users',{
       headers:{
         Authorization: `Bearer ${token}`,
+        "Content_Type":"application/json"
         
       }
     })
@@ -43,18 +44,29 @@ export  function AppProvider({children}) {
     })
   }
   /// trouver le user concter basè sur le token crèe sur le authentifacation la premuere fois 
-  async function getUser(){
-      const res=await fetch('api/user',{
-        headers:{
-          Authorization:`Bearer ${token}`,
-          
+  async function getUser() {
+    try {
+      const res = await fetch('api/user', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
         },
-      })
-      const data=await res.json();
-      if(res.ok){
-        setUser(data)
+      });
+  
+      // Vérifiez si la réponse est en JSON
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("La réponse n'est pas au format JSON");
       }
+  
+      const data = await res.json();
+      setUser(data);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+    }
   }
+  
+  
 
   // log out 
   async function handellogout(e){
@@ -99,7 +111,7 @@ export  function AppProvider({children}) {
         method:"get",
         headers:{
           Authorization:`Bearer ${token}`,
-          "Content_Type":"application/json"
+          "Content-Type":"application/json"
         }
       })
       const data=await res.json()
@@ -181,8 +193,8 @@ export  function AppProvider({children}) {
   
   useEffect(()=>{
     if(token){
-      getAllUsers()
       getUser()
+      getAllUsers()
       getBooks()
       geetCategory()
       getReservation()

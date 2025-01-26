@@ -13,6 +13,8 @@ function Navbare() {
     const [openModelSingUp,setOpenModelSingUp]=useState(false)
     const {user,handellogout,darkMode,handelLightMode}=GetUsersData()
 
+    console.log("le user est ",user)
+
     
 
   return (

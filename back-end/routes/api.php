@@ -27,8 +27,9 @@ Route::get('books/{id}/download',[BookController::class,'download'])->name('book
 // routes pour les users et auth
 
 Route::get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json($request->user());
 })->middleware('auth:sanctum');
+
 
 Route::get('/users',[AuthController::class,'Allusers']);
 
