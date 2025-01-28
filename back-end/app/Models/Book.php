@@ -14,7 +14,9 @@ class Book extends Model
         'description',
         'pdf',
         'image',
-        'category_id'
+        'category_id',
+        'author',
+        'count'
     ];
 
     // category relation 

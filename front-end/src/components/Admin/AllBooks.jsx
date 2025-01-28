@@ -3,8 +3,41 @@ import { Link, NavLink } from 'react-router-dom'
 import {  ArrowUpDown, BookDown, BookOpenCheck, House, LibraryBig, LogOut, Plus, Search, FilePenLine, Trash2, Users } from 'lucide-react'
 import UserProfil from'../../assets/Enemy.jpg'
 import Nav from '../library/dashboard/Layout/Nav';
+import { GetUsersData } from '../../Provider/Context/AppContext';
+import axios from 'axios';
 
 function AllBooks() {
+  const {listBooks,token,user,handellogout}=GetUsersData()
+
+  function formatDate(dateString) {
+    const date = new Date(dateString); // Création d'un objet Date à partir de la chaîne de caractères
+    const option={year:'numeric',month:'short',day:'numeric'}
+    return  date.toLocaleDateString('en-us',option)
+  }
+
+  // delete user par id de book 
+
+  async function deleteBook(IdBook) {
+    try {
+      const res = await axios.delete(`/api/books/${IdBook}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (res.status === 200) { // Si la réponse est OK
+        console.log("Le livre a été supprimé.");
+      }
+    } catch (error) {
+      if (error.response) {
+        // Erreur avec réponse du serveur
+        console.log(error.response.data);
+      } else {
+        // Erreur sans réponse du serveur (problème réseau par exemple)
+        console.log("Erreur : ", error.message);
+      }
+    }
+  }
     return (
         <div className=' flex h-screen'>
           {/*  sidbare */}
@@ -23,23 +56,23 @@ function AllBooks() {
               <NavLink to='/AllBooks' className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><LibraryBig size={24}  className="pr-1 text-gray-400"/><span>All books</span></NavLink>
               <NavLink to='/AllRequest' className={({ isActive }) =>   `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}` }><BookDown size={24}  className="pr-1 text-gray-400" /><span>All requeste</span></NavLink>
               {/* <NavLink className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><House size={24} className="pr-1  text-gray-400 " /><span>All Users</span></NavLink> */}
-              <Link className='  p-1 transition duration-300 text-black w-full rounded-3xl border border-gray-100 shadow-sm     flex items-center   capitalize  absolute  top-96  justify-between '>
-                <img className='rounded-full object-cover w-8 h-8 '  src={UserProfil} alt="" />
-                <div className='flex   flex-col  '>
-                  <span className='text-[14px] text-black '>amine haddade</span>
-                  <span className='text-[10px] text-gray-500  '>amine@gmail.com</span>
-    
-                </div>
-                <LogOut size={28} color="#ff0000" />            
-              </Link>
-    
+               <Link className=' transition-all duration-300 p-1  text-black w-full rounded-3xl border border-gray-100 shadow-sm     flex items-center   capitalize  absolute  top-96    '>
+                             <div><img className='rounded-full object-cover transition duration-300 w-8 h-8 mr-2 relative'  src={user ? `http://localhost:8000/storage/${user.photo}`: UserProfil} alt="" /> <div className='absolute w-3 h-3 rounded-full bg-green-500 left-6 top-7'></div></div>
+                           <div className='flex   flex-col relative mr-6 '>
+                             <span className='text-[14px] font-medium text-black transition duration-300'>{user ? user.name: 'Chargement...'}</span>
+                             <span className='text-[10px] text-gray-500 font-medium transition duration-300 '>{user ? user.email: 'Chargement...'}</span>
+               
+                           </div>
+                          
+                           <LogOut size={28} color="#ff0000" className=''/>            
+                         </Link>
             </ul>
           </div>
           <div className='bg-bgadmin  w-full overflow-y-auto'>
           {/* navbare */}
               <header className='flex justify-between sticky top-0  items-center mb-4 backdrop-blur-sm drop-shadow-lg bg-white/15 p-4'>
                 <div className=''>
-                  <h1 className='text-xl  text-black pb-1  '>Welcome Amine</h1>
+                  <h1 className='text-xl  text-black pb-1 capitalize '>welcome {user ? user.name: 'Chargement...'}</h1>
                   <p className='text-sm text-gray-500'>Monitor All Of Your Project And Task here</p>
                 </div>
                 <div>
@@ -72,7 +105,23 @@ function AllBooks() {
                   </div>
 
                 {/* list books */}
-              
+                  {listBooks.map((ele,index)=>{
+                    return (
+                      <div key={index}  className='grid  justify-between items-center bg-white grid-cols-[3fr_1fr_1fr_1fr_1fr] rounded-lg px-3 py-3'>
+                          <div className='flex items-center gap-2 pt-1'>
+                            <img src={`http://localhost:8000/storage/${ele.image}`} alt="" className='w-8 h-12 object-cover rounded-sm ' />
+                            <h1 className='capitalize text-gray-700 text-sm  '>{ele.title}</h1>
+                          </div>
+                          <span className='capitalize text-gray-700 text-sm '>{ele.author}</span>
+                          <div className='capitalize text-gray-700 text-sm    '>{ele.category.libelle}</div>
+                          <span className='capitalize text-gray-700 text-sm '>{formatDate(ele.created_at)}</span>
+                          <span className='capitalize text-gray-700 text-[13px] cursor-pointer text-center mx-auto flex items-center gap-3' >
+                            <FilePenLine size={18} color="#00b36e" />
+                            <Trash2  onClick={()=>deleteBook(ele.id)} size={18} color="#ff0000" />
+                          </span>
+                    </div>
+                    )
+                  })}
                   <div  className='grid  justify-between items-center bg-white grid-cols-[3fr_1fr_1fr_1fr_1fr] rounded-lg px-3 py-3'>
                       <div className='flex items-center gap-2 pt-1'>
                         <img src={UserProfil} alt="" className='w-8 h-12 object-cover rounded-sm ' />

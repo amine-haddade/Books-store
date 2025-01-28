@@ -38,6 +38,7 @@ Route::post('/createuser',[AuthController::class,'createuser']);
 Route::post('/login',[AuthController::class,'login']);
 
 Route::post('/logout',[AuthController::class,'logout'])->middleware("auth:sanctum");
+Route::delete('/user/{id}',[AuthController::class,'destroy'])->middleware("auth:sanctum");
 
 // reservation routes api 
 

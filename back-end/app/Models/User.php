@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'role',
         'password',
+        'photo',
     ];
 
     //  reservation relation

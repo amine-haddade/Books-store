@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useRef, useState } from 'react'
+import { data, Link, NavLink, useNavigate } from 'react-router-dom'
 import {  BookDown, BookOpenCheck, FileText, House, ImageDown, ImageUp, LibraryBig, LogOut, MoveLeft, Search, Users, X, FileDown } from 'lucide-react'
 import UserProfil from'../../assets/Enemy.jpg'
+import { GetUsersData } from '../../Provider/Context/AppContext'
+import axios from 'axios'
 
 function AddBook() {
+  const Navigate=useNavigate()
+  const {token,listCategory}=GetUsersData()
+  console.log(" la liste est ",listCategory)
 
     const [fileName,setFileName]=useState()
+    const [errors,setErrors]=useState({})
+    const imageRef=useRef('')
+    const pdfRef=useRef('')
 
     const handleCHngeFile=(e)=>{
             const file=e.target.files[0]
@@ -20,6 +28,46 @@ function AddBook() {
             if(pdf){
                 setpdfName(pdf.name)
             }
+    }
+
+    // function store user
+
+    const handelSubmit=async (e)=>{
+      e.preventDefault()
+      const Data=new FormData(e.currentTarget)
+      if (imageRef.current.files[0]) {
+        Data.append("image", imageRef.current.files[0]);
+      }
+      if (pdfRef.current.files[0]) {
+        Data.append("pdf", pdfRef.current.files[0]);
+      }
+    
+
+      try{
+      const response= await axios
+      .post('http://127.0.0.1:8000/api/books',Data,{
+            headers:{
+              Authorization:`Bearer ${token}`
+            }
+          })
+      
+      
+     
+        console.log(response.data)
+        Navigate('/Home')
+      
+      }
+
+      catch(error){
+        if(error.response){
+          setErrors(error.response.data.errors)
+        }
+        else{
+          console.log(error)
+        }
+        
+      } 
+      
     }
 
   return (
@@ -77,41 +125,54 @@ function AddBook() {
 
             {/*   form add book  */}
 
-            <form className='w-3/4 mt-11 flex flex-col gap-6'>
+            <form className='w-3/4 mt-11 flex flex-col gap-6' encType='multipart/form-data' onSubmit={handelSubmit}>
                 <div className='inline-flex flex-col gap-2 text-base w-full capitalize '>
                     <label htmlFor="Book Title">Book Title</label>
                     <input name='title' type="text" id='Book Title' placeholder='Ecrire le titre de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4'  />
+                    {errors.title && <span className='text-red-600 text-sm'>{errors.title[0]}</span>}
                 </div>
                 <div className='inline-flex flex-col gap-2 text-base w-full capitalize'>
                     <label htmlFor="author">author</label>
                     <input name='author' type="text" id='author' placeholder='Ecrire le titre de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4'  />
+                    {errors.author && <span className='text-red-600 text-sm'>{errors.author[0]}</span>}
+
                 </div>
                 <div className='inline-flex flex-col gap-2 text-base w-full capitalize'>
                     <label htmlFor="count">count</label>
                     <input name='count' type="text" id='count' placeholder='Ecrire le nombres des livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4'  />
+                    {errors.count && <span className='text-red-600 text-sm'>{errors.count[0]}</span>}
+
                 </div>
                 <div className='inline-flex flex-col gap-2 text-base w-full capitalize'>
                     <label htmlFor="author">category</label>
                     <select name='category_id'  id='author'  className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4'  >
                         <option value="">chosir une category</option>
-                        <option value="1">devloppemnt personnle</option>
-                        <option value="2">histoire</option>
-                        <option value="3">sportifs</option>
+                        {listCategory.map(ele=>{
+                          return(
+                            <option key={ele.id} value={ele.id}>{ele.libelle}</option>
+                          )
+                        })}
+                        
                     </select>
+                    {errors.category_id && <span className='text-red-600 text-sm'>{errors.category_id[0]}</span>}
                 </div>
                 <div className='inline-flex flex-col gap-2 text-base w-full capitalize'>
                     <label htmlFor="image">image</label>
                     <label htmlFor="image"  className='outline-none rounded-md bg-white  text-gray-600 border border-gray-200 py-2 px-4  flex items-center justify-center cursor-pointer  '>{fileName ? <div className='px-4 bg-blue-100 text-blue-600 text-base rounded-md flex justify-between gap-3 items-center' ><ImageDown size={18}  />{fileName}<X size={18} /></div> :<ImageUp  />}</label>
-                    <input onChange={handleCHngeFile} name='image' type="file" id='image' placeholder='Ecrire le titre de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4 hidden'  />
+                    <input ref={imageRef} onChange={handleCHngeFile} name='image' type="file" id='image' placeholder='Ecrire le titre de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4 hidden'  />
+                    {errors.image && <span className='text-red-600 text-sm'>{errors.image[0]}</span>}
                 </div>
-                <div className='inline-flex flex-col gap-2 text-base w-full capitalize'>
+                <div className='inline-flex flex-col gap-1 text-base w-full capitalize'>
                     <label htmlFor="pdf">pdf</label>
-                    <label htmlFor="pdf"  className='outline-none rounded-md bg-white  text-gray-600 border border-gray-200 py-2 px-4  flex items-center justify-center cursor-pointer  '>{pdfName ? <div className='px-4 bg-blue-100 text-blue-600 text-base rounded-md flex justify-between gap-3 items-center' ><FileDown  size={18}  />{pdfName}<X size={18} /></div> :<FileText />}</label>
-                    <input onChange={handleCHngepdf} name='pdf' type="file" id='pdf' placeholder='Ecrire le titre de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4 hidden'  />
+                    <label htmlFor="pdf"  className='outline-none rounded-md bg-white  text-gray-600 border border-gray-200 py-2 px-4  flex items-center justify-center cursor-pointer  '>{pdfName ? <div className='px-4 bg-blue-100 text-blue-600 text-base rounded-md flex justify-between gap-3 items-center mb-1' ><FileDown  size={18}  />{pdfName}<X size={18} /></div> :<FileText />}</label>
+                    <input ref={pdfRef} onChange={handleCHngepdf} name='pdf' type="file" id='pdf' placeholder='Ecrire le titre de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4 hidden'  />
+                    {errors.pdf && <span className='text-red-600 text-sm'>{errors.pdf[0]}</span>}
+
                 </div>
-                <div className='inline-flex flex-col gap-2 text-base w-full capitalize'>
+                <div className='inline-flex flex-col gap-1 text-base w-full capitalize'>
                     <label htmlFor="description">description</label>
-                    <textarea name='description' rows={5} type="text" id='description' placeholder='Ecrire le description de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4'  />
+                    <textarea name='description' rows={5} type="text" id='description' placeholder='Ecrire le description de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4 mb-1'  />
+                    {errors.description && <span className='text-red-600 text-sm'>{errors.description[0]}</span>}
                 </div>
                 
                     

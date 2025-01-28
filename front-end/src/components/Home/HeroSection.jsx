@@ -1,6 +1,8 @@
 import React from 'react'
 import Book1 from '../../assets/Enemy.jpg'
+import { GetUsersData } from '../../Provider/Context/AppContext'
 function HeroSection() {
+
   return (
     <div className='grid  md:gap-2 md:items-center grid-cols-1 md:grid-cols-2 px-8 md:px-20 py-9 dark:text-indigo-700'>
       <div className=' flex flex-col gap-6 items-start mb-8 md:mb-10 md:items-start  '>

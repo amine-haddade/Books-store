@@ -3,7 +3,9 @@ import { Link, NavLink } from 'react-router-dom'
 import {  ArrowUpDown, BookDown, BookOpenCheck, House, LibraryBig, LogOut, Plus, Search, FilePenLine, Trash2, Users, CircleX, X } from 'lucide-react'
 import UserProfil from'../../assets/Enemy.jpg'
 import book from'../../assets/atomic.png'
+import { GetUsersData } from '../../Provider/Context/AppContext'
 function AllRequest() {
+  const {valideReservation,listReservations,handellogout,user}=GetUsersData()
     return (
         <div className=' flex h-screen'>
           {/*  sidbare */}
@@ -22,15 +24,16 @@ function AllRequest() {
               <NavLink to='/AllUsers' className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><Users size={24}  className="pr-1 text-gray-400"/><span>All users</span></NavLink>
               <NavLink to='/AllBooks' className={({ isActive }) =>   `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}` }><LibraryBig size={24}  className="pr-1 text-gray-400" /><span>All books</span></NavLink>
               <NavLink to="/AllRequest" className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><BookDown size={24} className="pr-1  text-gray-400 " /><span>All request</span></NavLink>
-              <Link className='  p-1 transition duration-300 text-black w-full rounded-3xl border border-gray-100 shadow-sm     flex items-center   capitalize  absolute  top-96  justify-between '>
-                <img className='rounded-full object-cover w-8 h-8 '  src={UserProfil} alt="" />
-                <div className='flex   flex-col  '>
-                  <span className='text-[14px] text-black '>amine haddade</span>
-                  <span className='text-[10px] text-gray-500  '>amine@gmail.com</span>
-    
-                </div>
-                <LogOut size={28} color="#ff0000" />            
-              </Link>
+             <Link className=' transition-all duration-300 p-1  text-black w-full rounded-3xl border border-gray-100 shadow-sm     flex items-center   capitalize  absolute  top-96    '>
+                           <div><img className='rounded-full object-cover transition duration-300 w-8 h-8 mr-2 relative'  src={user ? `http://localhost:8000/storage/${user.photo}`: UserProfil} alt="" /> <div className='absolute w-3 h-3 rounded-full bg-green-500 left-6 top-7'></div></div>
+                         <div className='flex   flex-col relative mr-6 '>
+                           <span className='text-[14px] font-medium text-black transition duration-300'>{user ? user.name: 'Chargement...'}</span>
+                           <span className='text-[10px] text-gray-500 font-medium transition duration-300 '>{user ? user.email: 'Chargement...'}</span>
+             
+                         </div>
+                        
+                         <LogOut size={28} color="#ff0000" className=''/>            
+                       </Link>
     
             </ul>
           </div>
@@ -38,7 +41,7 @@ function AllRequest() {
           {/* navbare */}
               <header className='flex justify-between sticky top-0  items-center mb-4 backdrop-blur-sm drop-shadow-lg bg-white/15 p-4'>
                 <div className=''>
-                  <h1 className='text-xl  text-black pb-1  '>Welcome Amine</h1>
+                  <h1 className='text-xl  text-black pb-1 capitalize '>welcome {user ? user.name: 'Chargement...'}</h1>
                   <p className='text-sm text-gray-500'>Monitor All Of Your Project And Task here</p>
                 </div>
                 <div>
@@ -60,8 +63,8 @@ function AllRequest() {
                   <h1 className='text-lg'>All reservation request</h1>
                   <div className='flex gap-4  '>
                     <h2 className='flex  gap-1 items-center text-base'>A-Z  <ArrowUpDown size={20} className='text-gray-600'/></h2>
-                    <button className='flex  gap-1 items-center cursor-pointer   transition-all duration-300 text-white py-2 px-2 text-sm capitalize bg-green-500 rounded-md '><Plus size={18}/>accept all </button>
-                    <button className='flex  gap-1 items-center cursor-pointer   transition-all duration-300 text-white py-2 px-2 text-sm capitalize bg-red-500 rounded-md '><X  size={18}/>camcel all </button>
+                    <button className='flex  gap-1 items-center cursor-pointer   transition-all duration-300  py-2 px-2 text-sm capitalize bg-green-200 text-green-800 hover:bg-green-400 rounded-md '><Plus size={18}/>accept all </button>
+                    <button className='flex  gap-1 items-center cursor-pointer   transition-all duration-300  py-2 px-2 text-sm capitalizebg-green-200 bg-red-200 text-red-800 hover:bg-red-400  rounded-md '><X  size={18}/>cancel all </button>
                   </div>
                 </div>
                 <div className='w-full p-2 flex flex-col justify-between   '>
@@ -75,20 +78,49 @@ function AllRequest() {
                   </div>
 
                 {/* list request */}
-              
-                  <div  className='grid  justify-between items-center bg-white grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] rounded-lg px-3 py-3'>
+                {listReservations.map((ele,index)=>{
+                  return(
+                    <div key={index}  className='grid  justify-between items-center bg-white grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] rounded-lg px-3 py-3'>
+                    <div className='flex items-center gap-2 pt-1'>
+                      <img src={`http://localhost:8000/storage/${ele.book.image}`} alt="" className='w-10 h-14 object-cover rounded-sm ' />
+                      <h1 className='capitalize text-gray-700 text-sm  '>{ele.book.title}</h1>
+                    </div>
+                    <div className='flex items-center gap-2 pt-1'>
+                        <img src={UserProfil} alt="" className='w-10 h-10 rounded-full object-cover ' />
+                        <div className='flex flex-col '>
+                          <h1 className='capitalize text-sm leading-[0.8] '>{ele.user.name}</h1>
+                          <span className='text-[12px] text-gray-400 font-normal'>{ele.user.email}</span>
+                        </div>
+                    </div>
+                    <div className={`capitalize ${ele.status==='approved' ?'text-green-800  bg-green-200' :'text-red-800  bg-red-200'}   text-[12px] font-medium py-[1px]   rounded-3xl  max-w-[80px] flex items-center justify-center  `}><span>{ele.status}</span></div>
+                    <div className='capitalize text-gray-700 text-sm    '>{ele.start_date}</div>
+                    <span className='capitalize text-gray-700 text-sm '>d{ele.end_date}</span>
+                    <span className='capitalize text-gray-700 text-[13px] cursor-pointer text-center mx-auto flex items-center gap-3' >
+                        <div onClick={()=>valideReservation({id:ele.id,status:"approved"})} className='capitalize text-green-800 hover:bg-green-300  text-sm font-medium py-1  rounded-3xl bg-green-50 w-[140px] flex items-center justify-center transition-all duration-200  '>
+                          <span>approved request</span>
+                        </div>
+                        <div  onClick={()=>valideReservation({id:ele.id,status:"canceled"})} className='text-red-600 rounded-full w-8 h-8 flex items-center justify-center bg-red-50 hover:bg-red-200 transition-all duration-200'>
+
+                          <CircleX  size={18} color="#ff0000" />
+                        </div>
+                    </span>
+                </div>
+                  )
+                  
+                })}
+                    {/* <div   className='grid  justify-between items-center bg-white grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] rounded-lg px-3 py-3'>
                       <div className='flex items-center gap-2 pt-1'>
                         <img src={book} alt="" className='w-10 h-14 object-cover rounded-sm ' />
-                         <h1 className='capitalize text-gray-700 text-sm  '>Amine Haddade</h1>
+                        <h1 className='capitalize text-gray-700 text-sm  '>amine books</h1>
                       </div>
-                       <div className='flex items-center gap-2 pt-1'>
+                      <div className='flex items-center gap-2 pt-1'>
                           <img src={UserProfil} alt="" className='w-10 h-10 rounded-full object-cover ' />
                           <div className='flex flex-col '>
                             <h1 className='capitalize text-sm leading-[0.8] '>Amine Haddade</h1>
                             <span className='text-[12px] text-gray-400 font-normal'>amine@gmail.com</span>
                           </div>
-                       </div>
-                       <div className='capitalize text-yellow-800   text-[12px] font-medium py-[1px]  rounded-3xl bg-yellow-200 max-w-[80px] flex items-center justify-center  '><span>pending</span></div>
+                      </div>
+                      <div className='capitalize text-red-800   text-[12px] font-medium py-[1px]  rounded-3xl bg-red-200 max-w-[80px] flex items-center justify-center  '><span>cancled</span></div>
                       <div className='capitalize text-gray-700 text-sm    '>dec 19 2024</div>
                       <span className='capitalize text-gray-700 text-sm '>dec 19 2024</span>
                       <span className='capitalize text-gray-700 text-[13px] cursor-pointer text-center mx-auto flex items-center gap-3' >
@@ -100,57 +132,9 @@ function AllRequest() {
                             <CircleX  size={18} color="#ff0000" />
                           </div>
                       </span>
-                  </div>
-                  <div  className='grid  justify-between items-center bg-white grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] rounded-lg px-3 py-3'>
-                      <div className='flex items-center gap-2 pt-1'>
-                        <img src={book} alt="" className='w-10 h-14 object-cover rounded-sm ' />
-                         <h1 className='capitalize text-gray-700 text-sm  '>Amine Haddade</h1>
-                      </div>
-                       <div className='flex items-center gap-2 pt-1'>
-                          <img src={UserProfil} alt="" className='w-10 h-10 rounded-full object-cover ' />
-                          <div className='flex flex-col '>
-                            <h1 className='capitalize text-sm leading-[0.8] '>Amine Haddade</h1>
-                            <span className='text-[12px] text-gray-400 font-normal'>amine@gmail.com</span>
-                          </div>
-                       </div>
-                       <div className='capitalize text-red-800   text-[12px] font-medium py-[1px]  rounded-3xl bg-red-200 max-w-[80px] flex items-center justify-center  '><span>cancled</span></div>
-                      <div className='capitalize text-gray-700 text-sm    '>dec 19 2024</div>
-                      <span className='capitalize text-gray-700 text-sm '>dec 19 2024</span>
-                      <span className='capitalize text-gray-700 text-[13px] cursor-pointer text-center mx-auto flex items-center gap-3' >
-                          <div className='capitalize text-green-800 hover:bg-green-300  text-sm font-medium py-1  rounded-3xl bg-green-50 w-[140px] flex items-center justify-center transition-all duration-200  '>
-                            <span>approved request</span>
-                          </div>
-                          <div className='text-red-600 rounded-full w-8 h-8 flex items-center justify-center bg-red-50 hover:bg-red-200 transition-all duration-200'>
-
-                            <CircleX  size={18} color="#ff0000" />
-                          </div>
-                      </span>
-                  </div>
-                  <div  className='grid  justify-between items-center bg-white grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] rounded-lg px-3 py-3'>
-                      <div className='flex items-center gap-2 pt-1'>
-                        <img src={book} alt="" className='w-10 h-14 object-cover rounded-sm ' />
-                         <h1 className='capitalize text-gray-700 text-sm  '>Amine Haddade</h1>
-                      </div>
-                       <div className='flex items-center gap-2 pt-1'>
-                          <img src={UserProfil} alt="" className='w-10 h-10 rounded-full object-cover ' />
-                          <div className='flex flex-col '>
-                            <h1 className='capitalize text-sm leading-[0.8] '>Amine Haddade</h1>
-                            <span className='text-[12px] text-gray-400 font-normal'>amine@gmail.com</span>
-                          </div>
-                       </div>
-                       <div className='capitalize text-green-800   text-[12px] font-medium py-[1px]   rounded-3xl bg-green-200 max-w-[80px] flex items-center justify-center  '><span>approved</span></div>
-                      <div className='capitalize text-gray-700 text-sm    '>dec 19 2024</div>
-                      <span className='capitalize text-gray-700 text-sm '>dec 19 2024</span>
-                      <span className='capitalize text-gray-700 text-[13px] cursor-pointer text-center mx-auto flex items-center gap-3' >
-                          <div className='capitalize text-green-800 hover:bg-green-300  text-sm font-medium py-1  rounded-3xl bg-green-50 w-[140px] flex items-center justify-center transition-all duration-200  '>
-                            <span>approved request</span>
-                          </div>
-                          <div className='text-red-600 rounded-full w-8 h-8 flex items-center justify-center bg-red-50 hover:bg-red-200 transition-all duration-200'>
-
-                            <CircleX  size={18} color="#ff0000" />
-                          </div>
-                      </span>
-                  </div>
+                      </div> */}
+ 
+                  
               </div>
               
               </div>

@@ -22,6 +22,10 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categorys')->onDelete('cascade');
             $table->timestamps();
+
+
+            $table->string("author");
+            $table->integer("count");
         });
     }
 

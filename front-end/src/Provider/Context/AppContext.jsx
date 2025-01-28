@@ -17,10 +17,6 @@ export  function AppProvider({children}) {
     localStorage.setItem("dark", newMode);
 }
 
-
-
-
-
   ///// ********************** users partie *************************////
 
   // list users 
@@ -129,7 +125,7 @@ export  function AppProvider({children}) {
       .get('http://127.0.0.1:8000/api/reservation',{
         headers:{
           Authorization: `Bearer ${token}`,
-          
+          "Content_Type":"application/json",
         }
       })
       .then((response)=>{
@@ -207,7 +203,7 @@ export  function AppProvider({children}) {
     <AppContext.Provider value=
     {{    
           /* user data 
-          */token,setToken,user,setUser,handellogout,
+          */token,setToken,user,setUser,handellogout,listUsers,
 
           /* book data 
           */
