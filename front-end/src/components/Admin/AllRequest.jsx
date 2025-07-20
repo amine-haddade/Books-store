@@ -86,7 +86,7 @@ function AllRequest() {
                       <h1 className='capitalize text-gray-700 text-sm  '>{ele.book.title}</h1>
                     </div>
                     <div className='flex items-center gap-2 pt-1'>
-                        <img src={UserProfil} alt="" className='w-10 h-10 rounded-full object-cover ' />
+                        <img src={`http://localhost:8000/storage/${ele.user.photo}`}alt="" className='w-10 h-10 rounded-full object-cover ' />
                         <div className='flex flex-col '>
                           <h1 className='capitalize text-sm leading-[0.8] '>{ele.user.name}</h1>
                           <span className='text-[12px] text-gray-400 font-normal'>{ele.user.email}</span>
@@ -108,31 +108,7 @@ function AllRequest() {
                   )
                   
                 })}
-                    {/* <div   className='grid  justify-between items-center bg-white grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] rounded-lg px-3 py-3'>
-                      <div className='flex items-center gap-2 pt-1'>
-                        <img src={book} alt="" className='w-10 h-14 object-cover rounded-sm ' />
-                        <h1 className='capitalize text-gray-700 text-sm  '>amine books</h1>
-                      </div>
-                      <div className='flex items-center gap-2 pt-1'>
-                          <img src={UserProfil} alt="" className='w-10 h-10 rounded-full object-cover ' />
-                          <div className='flex flex-col '>
-                            <h1 className='capitalize text-sm leading-[0.8] '>Amine Haddade</h1>
-                            <span className='text-[12px] text-gray-400 font-normal'>amine@gmail.com</span>
-                          </div>
-                      </div>
-                      <div className='capitalize text-red-800   text-[12px] font-medium py-[1px]  rounded-3xl bg-red-200 max-w-[80px] flex items-center justify-center  '><span>cancled</span></div>
-                      <div className='capitalize text-gray-700 text-sm    '>dec 19 2024</div>
-                      <span className='capitalize text-gray-700 text-sm '>dec 19 2024</span>
-                      <span className='capitalize text-gray-700 text-[13px] cursor-pointer text-center mx-auto flex items-center gap-3' >
-                          <div className='capitalize text-green-800 hover:bg-green-300  text-sm font-medium py-1  rounded-3xl bg-green-50 w-[140px] flex items-center justify-center transition-all duration-200  '>
-                            <span>approved request</span>
-                          </div>
-                          <div className='text-red-600 rounded-full w-8 h-8 flex items-center justify-center bg-red-50 hover:bg-red-200 transition-all duration-200'>
-
-                            <CircleX  size={18} color="#ff0000" />
-                          </div>
-                      </span>
-                      </div> */}
+                    
  
                   
               </div>

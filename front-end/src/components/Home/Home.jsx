@@ -10,10 +10,7 @@ import Collection from './Collection'
 import Serch from './Serch'
 import Footer from './Footer'
 import Navbare from './Layout/Navbare'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { fetchUsers } from '../../Store/Actions/FetchUsers'
-// import { fetchBooks } from '../../Store/Actions/FetchBooks'
-// import { fetchsingluser } from '../../Store/Actions/FetchSinglUser'
+import imageBg from "../../assets/Book Details.png"
 
 function Home() {
 
@@ -36,8 +33,8 @@ function Home() {
   // console.log('users list',users)
   
   return (
-    <div >
-      <div className='sticky top-0'>
+    <div>
+      <div className='sticky top-0 z-50'>
       <Navbare/>
       </div>
       <HeroSection/>

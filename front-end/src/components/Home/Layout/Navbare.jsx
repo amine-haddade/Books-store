@@ -19,7 +19,7 @@ function Navbare() {
 
   return (
     <div>
-    <header className=' sticky top-0 w-full flex justify-between items-center  backdrop-blur-sm drop-shadow-lg bg-white/30  dark:bg-transparent dark:text-gray-100  px-16 py-6 md-px-40 z-10 '>
+    <header className=' sticky top-0 w-full flex justify-between items-center  backdrop-blur-sm drop-shadow-lg bg-transparent  dark:bg-transparent dark:text-gray-100  px-16 py-6 md-px-40 z-50 shadow-md    '>
             <div className='text-primary cursor-pointer flex gap-1 items-center text-xl '>
                 <BookMarked  />
                 <h1 >E-Book</h1>
@@ -28,15 +28,15 @@ function Navbare() {
                 <ul className='hidden list-none xl:flex  items-center gap-10 justify-between text-sm '>
                     <Link to="/" className='cursor-pointer hover:text-primary duration-300 '>Home</Link>
                     <Link  className='cursor-pointer hover:text-primary duration-300 '>categories</Link>
-                    <Link className='cursor-pointer hover:text-primary duration-300 '>discount</Link>
+                    <Link to='/Home' className='cursor-pointer hover:text-primary duration-300 '>Dashboard</Link>
+                    
                     <Link className='cursor-pointer hover:text-primary duration-300 '>serch</Link>
-                    <Link className='cursor-pointer hover:text-primary duration-300 '>subscribe</Link>
                     {!user && (
                         <>                        {/* <Link to="/login"  className='cursor-pointer hover:text-primary duration-300 ' >login</Link> */}
                         </>
                     )}
                     {user && user.role==="admin" ? (
-                            <Link to="/list"  className='cursor-pointer hover:text-primary duration-300 '>list</Link>
+                        <Link to="/Home"  className='cursor-pointer hover:text-primary duration-300 '>Dashboard</Link>
                 
                     ):null}
                 </ul>
@@ -104,6 +104,7 @@ function Navbare() {
             {
                 openSidBare && <SidBare onClose={()=>{setOpenSidBare(false)}} />
             }
+            
 
            
         </main>

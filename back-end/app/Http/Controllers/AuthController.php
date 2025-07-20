@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
-use App\Models\Book;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -12,8 +12,12 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
+
+
 class AuthController extends Controller
 {
+
+    
 
 
 
@@ -28,6 +32,7 @@ class AuthController extends Controller
         ],200);
     }
     public function createuser(CreateUserRequest $request){
+       
         $datauser=$request->validated();
         if($request->hasFile('photo')){
             $photoName=time().'_'.$request->file('photo')->getClientOriginalName();
@@ -45,6 +50,22 @@ class AuthController extends Controller
             return response()->json(['error'=>'le file de user ne pas uploads'],404);
         }
         
+    }
+    public function updateuser(UpdateUserRequest $request,User $user){
+    
+        $data=$request->validated();
+        if(!empty($data['password'])){
+            $data['password']=bcrypt($data['password']);
+        }else{
+            unset($data['password']);
+        }
+        if($request->hasFile('photo')){
+            $photoNameUpdatd=time().'_'.$request->file('photo')->getClientOriginalName();
+            $photoPathUpdatd=$request->file('photo')->storeAs('User/Photos',$photoNameUpdatd,'public');
+            $data['photo']=$photoPathUpdatd;
+        }
+        $user->update($data);
+        return response()->json(['message'=>'user modifier avec succès ','user'=>$user]);
     }
     public function login(Request $request){
         $request->validate(['email'=>'required|email',"password"=>"required"]);

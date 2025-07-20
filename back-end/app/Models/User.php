@@ -20,9 +20,13 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'role',
         'password',
         'photo',
+        'role'
+    ];
+
+    protected $attributes = [
+        // 'role' => 'user',
     ];
 
     //  reservation relation
@@ -36,8 +40,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
+        'password'
     ];
 
     /**
@@ -52,4 +56,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    
 }

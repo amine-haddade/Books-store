@@ -1,8 +1,19 @@
 import React, {  useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import  { GetUsersData } from '../../../Provider/Context/AppContext'
+import { ImageDown, ImageUp, X } from 'lucide-react'
 
 function Register({onClose}) {
+  const [fileName,setFileName]=useState()
+  const PhotoRef=useRef('')
+
+
+  const handleCHngeFile=(e)=>{
+    const file=e.target.files[0]
+    if(file){
+      setFileName(file)
+    }
+  }
 
   const refmodel=useRef()
   const CloseModel=(e)=>{
@@ -17,6 +28,9 @@ function Register({onClose}) {
     async function  handelSubmit(e){
       e.preventDefault()
       const formData_register=new FormData(e.currentTarget)
+      if(PhotoRef.current.files[0]){
+        formData_register.append("photo",PhotoRef)
+      }
       const res=await fetch('/api/createuser',{
         method:"post",
         body:formData_register
@@ -61,19 +75,13 @@ function Register({onClose}) {
             placeholder='write your email'/>
             {errors.email && <span className='text-red-600 text-sm'>{errors.email[0]}</span>}
         </div>
-        <div className='flex flex-col gap-1'>
-            <label htmlFor="role">role</label>
-            <input
-            name='role'  
-            value={formData.role}
-            onChange={(e)=>{setFormData({...formData,role:e.target.value})}}
-            className='dark:bg-bgDarkBook dark:border-gray-500 px-2 py-2 text-sm bg-bglogin border-gray-300 border-2 outline-none' 
-            type="text" 
-            id='role' 
-            placeholder='write your role'/>
-            {errors.role && <span className='text-red-600 text-sm'>{errors.role[0]}</span>}
-
-        </div> 
+        <div className='flex flex-col gap-1 text-base  capitalize'>
+              <label htmlFor="photo">photo</label>
+              <label htmlFor="photo"         className=' cursor-pointer dark:bg-bgDarkBook dark:border-gray-500 px-2 py-2 text-sm bg-bglogin border-gray-300 border-2 outline-none ' >{fileName? <div className='px-4 bg-blue-100 text-blue-600 text-base rounded-md flex justify-between gap-3 items-center' ><ImageDown size={18}  />{fileName.name}<X size={18} /></div> :<ImageUp  />}</label>
+              <input ref={PhotoRef} onChange={handleCHngeFile} name='photo' type="file" id='photo' placeholder='Ecrire le titre de livres' className='outline-none rounded-md bg-white  text-black border border-gray-200 py-2 px-4 hidden'  />
+              {errors.photo && <span className='text-red-600 text-sm'>{errors.photo[0]}</span>}
+        </div>
+         
         <div  className='flex flex-col gap-1'>
             <label htmlFor="password">password</label>
             <input

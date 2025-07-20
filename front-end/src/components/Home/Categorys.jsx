@@ -6,7 +6,7 @@ function Categorys() {
     <div className='dark:text-white '>
         <h1 className='text-4xl font-bold text-center pb-4 pt-7'>Explore Categories</h1>
         <p className='text-md text-gray-500  text-center dark:text-gray-300'>Discover our extensive collection of books across various categories  carefully curated for your<br /> reading pleasure</p>
-        <div className='grid lg:grid-cols-6 grid-cols-2 md:grid-cols-4 lg:gap-2 gap-4 justify-center items-center rounded-lg py-24 sm:px-12 px-1'>
+        <div className='grid lg:grid-cols-5 grid-cols-2 md:grid-cols-4 lg:gap-8 gap-4 justify-center items-center rounded-lg py-24 sm:px-12 px-1'>
             <div className=' group flex items-center justify-center rounded-lg drop-shadow-md py-6 cursor-pointer overflow-hidden   bg-purple-50  text-purple-600 '>
                     <div className='flex flex-col gap-2 group-hover:scale-105 transition-all duration-300  items-center  '>
                         <div className=' py-2 px-4 mb-4 rounded-lg bg-white flex items-center justify-center max-w-16'>
@@ -43,7 +43,7 @@ function Categorys() {
                         <p className='text-gray-600'>125 book</p>          
                     </div>
             </div>
-            <div className=' group flex items-center justify-center rounded-lg drop-shadow-md py-6 cursor-pointer overflow-hidden   bg-pink-50 text-pink-600 '>
+            {/* <div className=' group flex items-center justify-center rounded-lg drop-shadow-md py-6 cursor-pointer overflow-hidden   bg-pink-50 text-pink-600 '>
                     <div className='flex flex-col gap-2 group-hover:scale-105 transition-all duration-300  items-center'>
                         <div className=' py-2 px-4 mb-4 rounded-lg bg-white flex items-center justify-center max-w-16'>
                             <Brain size={32} />
@@ -51,7 +51,7 @@ function Categorys() {
                         <h3 className='text-xl text-black capitalize'>Self-Help</h3>
                         <p className='text-gray-600'>105 book</p>          
                     </div>
-            </div>
+            </div> */}
             <div className=' group flex items-center justify-center rounded-lg drop-shadow-md py-6 cursor-pointer overflow-hidden   bg-orange-50 text-orange-600'>
                     <div className='flex flex-col gap-2 group-hover:scale-105 transition-all duration-300  items-center '>
                         <div className=' py-2 px-4 mb-4 rounded-lg bg-white flex items-center justify-center max-w-16'>

@@ -24,7 +24,7 @@ function SidBare({onClose}) {
                     </>
                 )}
                 {user && user.role==="admin" ? (
-                        <Link to="/list"  className='cursor-pointer hover:text-primary duration-300 '>list</Link>
+                        <Link to="/Home"  className='cursor-pointer hover:text-primary duration-300 '>dashboard</Link>
             
                 ):null}
             

@@ -42,21 +42,15 @@ export  function AppProvider({children}) {
   /// trouver le user concter basè sur le token crèe sur le authentifacation la premuere fois 
   async function getUser() {
     try {
-      const res = await fetch('api/user', {
+      const res = await axios.get("api/user", {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'Accept': 'application/json',  // Assurez-vous d'accepter JSON
         },
       });
   
-      // Vérifiez si la réponse est en JSON
-      const contentType = res.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("La réponse n'est pas au format JSON");
-      }
-  
-      const data = await res.json();
-      setUser(data);
+      setUser(res.data); // Axios retourne directement les données dans `res.data`
     } catch (error) {
       console.error("Failed to fetch user:", error);
     }

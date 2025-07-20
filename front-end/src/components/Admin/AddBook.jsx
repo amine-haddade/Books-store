@@ -7,8 +7,7 @@ import axios from 'axios'
 
 function AddBook() {
   const Navigate=useNavigate()
-  const {token,listCategory}=GetUsersData()
-  console.log(" la liste est ",listCategory)
+  const {token,listCategory,user}=GetUsersData()
 
     const [fileName,setFileName]=useState()
     const [errors,setErrors]=useState({})
@@ -88,15 +87,16 @@ function AddBook() {
           <NavLink to='/AllBooks' className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><LibraryBig size={24}  className="pr-1 text-gray-400"/><span>All books</span></NavLink>
           <NavLink to='/AllRequest' className={({ isActive }) =>   `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}` }><BookDown size={24}  className="pr-1 text-gray-400" /><span>All requeste</span></NavLink>
           {/* <NavLink className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><House size={24} className="pr-1  text-gray-400 " /><span>All Users</span></NavLink> */}
-          <Link className='  p-1 transition duration-300 text-black w-full rounded-3xl border border-gray-100 shadow-sm     flex items-center   capitalize  absolute  top-96    '>
-              <div><img className='rounded-full object-cover w-8 h-8 mr-2 relative'  src={UserProfil} alt="" /> <div className='absolute w-3 h-3 rounded-full bg-green-500 left-6 top-7'></div></div>
-            <div className='flex   flex-col relative mr-6 '>
-              <span className='text-[14px] font-medium text-black '>amine haddade</span>
-              <span className='text-[10px] text-gray-500 font-medium '>amine@gmail.com</span>
-
-            </div>
-            <LogOut size={28} color="#ff0000" className=''/>            
-          </Link>
+           <Link className=' transition-all duration-300 p-1  text-black w-full rounded-3xl border border-gray-100 shadow-sm     flex items-center   capitalize  absolute  top-96    '>
+                        <div><img className='rounded-full object-cover transition duration-300 w-8 h-8 mr-2 relative'  src={user ? `http://localhost:8000/storage/${user.photo}`: UserProfil} alt="" /> <div className='absolute w-3 h-3 rounded-full bg-green-500 left-6 top-7'></div></div>
+                      <div className='flex   flex-col relative mr-6 '>
+                        <span className='text-[14px] font-medium text-black transition duration-300'>{user ? user.name: 'Chargement...'}</span>
+                        <span className='text-[10px] text-gray-500 font-medium transition duration-300 '>{user ? user.email: 'Chargement...'}</span>
+          
+                      </div>
+                     
+                      <LogOut size={28} color="#ff0000" className=''/>            
+                    </Link>
 
         </ul>
       </div>

@@ -46,7 +46,7 @@ function AdminHome() {
 
         <ul className='flex flex-col gap-1 relative  '>
           <NavLink to="/Home"  className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><House size={24} className="pr-1 text-gray-400" /><span>home</span></NavLink>
-          <NavLink  to='/AllBooks' className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><Users size={24} className="pr-1 text-gray-400" /><span>All Users</span></NavLink>
+          <NavLink  to='/AllUsers' className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><Users size={24} className="pr-1 text-gray-400" /><span>All Users</span></NavLink>
           <NavLink to='/AllBooks' className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><LibraryBig size={24}  className="pr-1 text-gray-400"/><span>All books</span></NavLink>
           <NavLink to='/AllRequest' className={({ isActive }) =>   `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}` }><BookDown size={24}  className="pr-1 text-gray-400" /><span>All requeste</span></NavLink>
           {/* <NavLink className={({ isActive }) =>  `py-3 transition duration-300 text-black w-full rounded-md px-3 flex items-center gap-2 capitalize ${isActive ? 'bg-blueadmin text-white' : ''}`}><House size={24} className="pr-1  text-gray-400 " /><span>All Users</span></NavLink> */}
@@ -81,7 +81,7 @@ function AdminHome() {
             {/* conten home admine */}
           <div className='p-4 '>
             <div  className='grid grid-cols-3 gap-4 items-center justify-between '>
-                    <div className='bg-white flex flex-col gap-3 p-5 rounded-2xl shadow-md '>
+                    <div className='bg-white flex flex-col gap-3 p-5 rounded-lg shadow-md '>
                       <div className='flex gap-2 items-center '>
                         <h1 className='text-base  text-gray-600'>Reseravtion books total</h1>
                         <div className='flex  text-red-600 items-center'>
@@ -91,7 +91,7 @@ function AdminHome() {
                       </div>
                         <h3 className='text-xl  font-semibold'>{countReservation}</h3>
                     </div>
-                    <div className='bg-white flex flex-col gap-3 p-5  rounded-2xl shadow-md '>
+                    <div className='bg-white flex flex-col gap-3 p-5  rounded-lg shadow-md '>
                       <div className='flex gap-2 items-center '>
                         <h1 className='text-base  text-gray-600 capitalize'>total users</h1>
                         <div className='flex  text-green-600 items-center'>
@@ -101,7 +101,7 @@ function AdminHome() {
                       </div>
                         <h3 className='text-xl  font-semibold'>{countUser}</h3>
                     </div>
-                    <div className='bg-white flex flex-col gap-3 p-5  rounded-2xl shadow-md '>
+                    <div className='bg-white flex flex-col gap-3 p-5  rounded-lg shadow-md '>
                       <div className='flex gap-2 items-center '>
                         <h1 className='text-base  text-gray-600 capitalize'>total books</h1>
                         <div className='flex  text-green-600 items-center'>
@@ -120,7 +120,7 @@ function AdminHome() {
                     <div className="bg-gradient-to-t from-gray-300  to-white absolute top-1/2 left-0 right-0 h-1/2 rounded-lg"></div>
                         <div className='flex justify-between px-3  '>
                           <h1 className='text-lg'>All Reservation</h1>
-                          <div className=' text-base bg-blue-100 py-1 px-3 text-blue-800 rounded-3xl cursor-pointer '>View All</div>
+                          <Link className=' text-base bg-blue-100 py-1 px-3 text-blue-800 rounded-3xl cursor-pointer ' to='/AllRequest'>View All</Link>
                         </div>
                         <div className='flex flex-col gap-3'>
                           {first3Reservations.map((ele,index)=>{
@@ -148,25 +148,7 @@ function AdminHome() {
                             )
                           })}
                           
-                          <div className='bg-bgadmin flex items-start justify-between py-3 px-4 rounded-md   bg-gradient-to-t from-gray-300  to-white relative z-10 '>
-                            <div className='flex gap-3 '>
-                              <img src={UserProfil} alt="" className='w-10 h-16 rounded-sm'   />
-                              <div className='flex flex-col  leading-none '>
-                                <h1 className='text-base capitalize '>amine haddade request book</h1>
-                                <p className='text-gray-600 text-sm font-normal'>category  book</p>
-                                <div className='flex gap-2'>
-                                  <div className="flex items-center gap-2">
-                                    <img src={UserProfil} className='w-5 h-5 object-cover rounded-full' alt="" />
-                                    <span className='text-black text-sm font-normal'>amine haddade </span>
-                                  </div>
-                                  <div className='flex items-center gap-1 '><CalendarDays size={16} className='text-gray-500  ' /> <span className='text-sm'>12/01/24</span></div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className='p-2 cursor-pointer rounded-lg bg-white'>
-                            <Eye className="text-gray-500" />
-                            </div>
-                          </div>
+                          
                       </div>
                     </div>
 
@@ -176,7 +158,7 @@ function AdminHome() {
 
                         <div className='flex justify-between px-3  '>
                           <h1 className='text-lg'>All Users</h1>
-                          <div className=' text-base bg-blue-100 py-1 px-3 text-blue-800 rounded-3xl cursor-pointer '>View All</div>
+                          <Link className=' text-base bg-blue-100 py-1 px-3 text-blue-800 rounded-3xl cursor-pointer ' to='/AllUsers'>View All</Link>
                         </div>
                         
                         <div className="grid grid-cols-3 grid-rows-2 gap-3 mt-5 ">
@@ -190,37 +172,7 @@ function AdminHome() {
                               </div>
                           )
                          })} 
-                          {/* <div  className='flex flex-col items-center justify-center  py-3 rounded-md bg-bgadmin z-20'>
-                            <img src={UserProfil} alt=""  className='h-10 w-10 rounded-full mb-3 object-cover '/>
-                            <h1 className='tex-base  capitalize  leading-none pb-[3px] '>amine hadded</h1>
-                            <p className='text-gray-400  font-light  text-sm leading-none'>amine@gmail.com</p>
-                          </div>
-                          <div  className='flex flex-col items-center justify-center  py-3 rounded-md bg-bgadmin z-20'>
-                            <img src={UserProfil} alt=""  className='h-10 w-10 rounded-full mb-3 object-cover '/>
-                            <h1 className='tex-base  capitalize  leading-none pb-[3px] '>amine hadded</h1>
-                            <p className='text-gray-400  font-light  text-sm leading-none'>amine@gmail.com</p>
-                          </div> */}
                           
-                          
-                          <div  className='flex flex-col items-center justify-center  py-3 rounded-md bg-bgadmin bg-gradient-to-t from-gray-300  to-white relative z-10'>
-                            <img src={UserProfil} alt=""  className='h-10 w-10 rounded-full mb-3 object-cover '/>
-                            <h1 className='tex-base  capitalize  leading-none pb-[3px] '>amine hadded</h1>
-                            <p className='text-gray-400  font-light  text-sm leading-none'>amine@gmail.com</p>
-                          </div>
-                          <div  className='flex flex-col items-center justify-center  py-3 rounded-md bg-bgadmin bg-gradient-to-t from-gray-300  to-white relative z-10'>
-                            <img src={UserProfil} alt=""  className='h-10 w-10 rounded-full mb-3 object-cover '/>
-                            <h1 className='tex-base  capitalize  leading-none pb-[3px] '>amine hadded</h1>
-                            <p className='text-gray-400  font-light  text-sm leading-none'>amine@gmail.com</p>
-                          </div>
-                          <div  className='flex flex-col items-center justify-center  py-3 rounded-md bg-bgadmin bg-gradient-to-t from-gray-300  to-white relative z-10'>
-                            <img src={UserProfil} alt=""  className='h-10 w-10 rounded-full mb-3 object-cover '/>
-                            <h1 className='tex-base  capitalize  leading-none pb-[3px] '>amine hadded</h1>
-                            <p className='text-gray-400  font-light  text-sm leading-none'>amine@gmail.com</p>
-                          </div>
-                          
-                          
-                          
-
                         </div>
                     </div>
               </div>
@@ -229,7 +181,7 @@ function AdminHome() {
               <div className="bg-gradient-to-t from-gray-300  to-white absolute top-1/2 left-0 right-0 h-1/2 rounded-lg"></div>
                 <div className='flex justify-between px-3  '>
                   <h1 className='text-lg'>All Books</h1>
-                  <div className=' text-base bg-blue-100 py-1 px-3 text-blue-800 rounded-3xl cursor-pointer '>View All</div>
+                  <Link className=' text-base bg-blue-100 py-1 px-3 text-blue-800 rounded-3xl cursor-pointer ' to='/AllBooks'>View All</Link>
                 </div>
                 {first6Books.map((ele,index)=>{
                   return  (
@@ -249,80 +201,6 @@ function AdminHome() {
                   )
                 })}
                 
-               
-                <div className='bg-bgadmin flex items-start justify-between py-3 px-4 rounded-md z-10'>
-                  <div className='flex gap-3 '>
-                    <img src={UserProfil} alt="" className='w-10 h-16 rounded-sm'   />
-                    <div className='flex flex-col  leading-none '>
-                      <h1 className='text-base capitalize '>amine haddade request book</h1>
-                      <p className='text-gray-600 text-sm font-normal'>category  book</p>
-                      <div className='flex gap-2'>
-                        
-                        <div className='flex items-center gap-1 '><CalendarDays size={16} className='text-gray-500  ' /> <span className='text-sm'>12/01/24</span></div>
-                      </div>
-                    </div>
-                  </div>
-                        
-                  </div>
-                <div className='bg-bgadmin flex items-start justify-between py-3 px-4 rounded-md z-10'>
-                  <div className='flex gap-3 '>
-                    <img src={UserProfil} alt="" className='w-10 h-16 rounded-sm'   />
-                    <div className='flex flex-col  leading-none '>
-                      <h1 className='text-base capitalize '>amine haddade request book</h1>
-                      <p className='text-gray-600 text-sm font-normal'>category  book</p>
-                      <div className='flex gap-2'>
-                        
-                        <div className='flex items-center gap-1 '><CalendarDays size={16} className='text-gray-500  ' /> <span className='text-sm'>12/01/24</span></div>
-                      </div>
-                    </div>
-                  </div>
-                        
-                  </div>
-                  <div className='bg-bgadmin flex items-start justify-between py-3 px-4 rounded-md bg-gradient-to-t from-gray-100  to-white relative z-10'>
-                    <div className='flex gap-3 '>
-                      <img src={UserProfil} alt="" className='w-10 h-16 rounded-sm'   />
-                      <div className='flex flex-col  leading-none '>
-                        <h1 className='text-base capitalize '>amine haddade request book</h1>
-                        <p className='text-gray-600 text-sm font-normal'>category  book</p>
-                        <div className='flex gap-2'>
-                          
-                          <div className='flex items-center gap-1 '><CalendarDays size={16} className='text-gray-500  ' /> <span className='text-sm'>12/01/24</span></div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                  </div>
-                  <div className='bg-bgadmin flex items-start justify-between py-3 px-4 rounded-md bg-gradient-to-t from-gray-100  to-white relative z-10'>
-                    <div className='flex gap-3 '>
-                      <img src={UserProfil} alt="" className='w-10 h-16 rounded-sm'   />
-                      <div className='flex flex-col  leading-none '>
-                        <h1 className='text-base capitalize '>amine haddade request book</h1>
-                        <p className='text-gray-600 text-sm font-normal'>category  book</p>
-                        <div className='flex gap-2'>
-                          
-                          <div className='flex items-center gap-1 '><CalendarDays size={16} className='text-gray-500  ' /> <span className='text-sm'>12/01/24</span></div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                  </div>
-                  
-                  <div className='bg-bgadmin flex items-start justify-between py-3 px-4 rounded-md   bg-gradient-to-t from-gray-300  to-white relative z-10 '>
-                    <div className='flex gap-3 '>
-                      <img src={UserProfil} alt="" className='w-10 h-16 rounded-sm'   />
-                      <div className='flex flex-col  leading-none '>
-                        <h1 className='text-base capitalize '>amine haddade request book</h1>
-                        <p className='text-gray-600 text-sm font-normal'>category  book</p>
-                        <div className='flex gap-2'>
-                          
-                          <div className='flex items-center gap-1 '><CalendarDays size={16} className='text-gray-500  ' /> <span className='text-sm'>12/01/24</span></div>
-                        </div>
-                      </div>
-                    </div>
-                        
-                      
-                  </div>
-              
               </div>
             </div>
           </div>

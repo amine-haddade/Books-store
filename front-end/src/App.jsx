@@ -9,13 +9,16 @@ import Home from './components/Home/Home';
 import Navbare from './components/Home/Layout/Navbare';
 import { GetUsersData } from './Provider/Context/AppContext';
 import './index.css';
-import DashboardRoutes from './components/library/dashboard/DashboardRoutes';
-import Nav from './components/library/dashboard/Layout/Nav';
 import AllUsers from './components/Admin/AllUsers';
-import AllBooks from './components/Admin/AllBooks';
+
 import AllRequest from './components/Admin/AllRequest';
 import AdminHome from './components/Admin/AdminHome';
 import AddBook from './components/Admin/AddBook';
+import AllBooks  from './components/Admin/AllBooks'
+import ReserveBook from './components/Admin/ReserveBook';
+import Search from './components/Home/Search';
+import Profile from './components/Home/Profil/Profile';
+import BooksAll from './components/Home/BooksAll';
 
 function App() {
   const { user, darkMode } = GetUsersData();
@@ -26,14 +29,19 @@ function App() {
         <div className="bg-bluebg dark:bg-darkModeBg transition-all duration-200">
           <Routes>
             {/* Routes pour la home page */}
+            {/* <Route path="/ReserveBook/:id" element={user ? <Home /> : <ReserveBook />} /> */}
               <Route path='/' element={<Home />} />
               <Route path="/login" element={user ? <Home /> : <Login />} />
-              <Route path="/register" element={user ? <Home /> : <Register />} />
               <Route path="/Home" element={<AdminHome />}/>
+              <Route path="/profil" element={<Profile />}/>
+              <Route path="/register" element={user ? <Home /> : <Register />} />
+              <Route path='/ReserveBook' element={<ReserveBook />} />
+              <Route path='/Search' element={<Search />} />
               <Route path="/AllUsers" element={<AllUsers />}/>
               <Route path="/AllBooks" element={<AllBooks />}/>
               <Route path="/AllRequest" element={<AllRequest />}/>
               <Route path="/AddBook" element={<AddBook />}/>
+              <Route path="/BooksAll" element={<BooksAll />}/>
 
             
               {/* Routes pour les admins */}

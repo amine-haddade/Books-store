@@ -27,11 +27,14 @@ Route::get('books/{id}/download',[BookController::class,'download'])->name('book
 // routes pour les users et auth
 
 Route::get('/user', function (Request $request) {
-    return response()->json($request->user());
+    return response()->json([$request->user()]);
 })->middleware('auth:sanctum');
 
 
+
 Route::get('/users',[AuthController::class,'Allusers']);
+
+Route::put('/user/{user}/update',[AuthController::class,'updateuser']);
 
 Route::post('/createuser',[AuthController::class,'createuser']);
 

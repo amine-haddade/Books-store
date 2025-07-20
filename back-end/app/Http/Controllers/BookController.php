@@ -46,7 +46,7 @@ class BookController extends Controller implements HasMiddleware
         $imagePath = $request->file('image')->storeAs('Books/Images', $nameImage, 'public');
         $pdfPath = $request->file('pdf')->storeAs('Books/Pdf', $namePdf, 'public');
 
-        // Créer le livre dans la base de données
+        // Créer le livre dans KOla base de données
         $book = Book::create([
             'title' => $data['title'],
             'description' => $data['description'],

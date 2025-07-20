@@ -17,9 +17,15 @@ export default {
         "bluebg":"#e4ecfa",
         "bgdarck":"rgba(0, 0, 0, 0.845)",
         "bglogin":"#edf0fb",
-
         "bgadmin":"#F8F8FF",
         "blueadmin":"#25388C"
+      },
+      screens: {
+        xs: '320px',
+        sm: '480px',
+        md: '768px',
+        lg: '976px',
+        xl: '1440px',
       },
       
     },
